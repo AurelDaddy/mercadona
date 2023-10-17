@@ -36,9 +36,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/mercadona/","/mercadona/new", "/mercadona/categorie/**").permitAll()
+                .requestMatchers("/mercadona/","/mercadona/new", "/mercadona/categorie/**", "/mercadona/addProduit", "/mercadona/addCategorie", "/mercadona/putPromotionListeDates/{id}", "/mercadona/put1Promotion/{id}", "/mercadona/promotions", "/mercadona/promotionsDateDuJour").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/mercadona/addProduit", "/addCategorie", "putPromotiondates/{id}")
+                .authorizeHttpRequests().requestMatchers("")
                 .authenticated().and().formLogin().and().build();
     }
 

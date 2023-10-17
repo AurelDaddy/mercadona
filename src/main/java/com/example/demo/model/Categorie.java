@@ -21,6 +21,8 @@ public class Categorie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
+
+    @Column(unique=true)
     String libelle;
 
 }

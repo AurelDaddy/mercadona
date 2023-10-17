@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Log
@@ -44,7 +46,7 @@ public class RestController {
 
     @Transactional
     @PostMapping("/addProduit")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Produit addProduit(@RequestBody Produit produit) {
         if (produit == null){
             throw new IllegalArgumentException("La produit est nul");
@@ -56,7 +58,6 @@ public class RestController {
         produitNew.setLibelle(produit.getLibelle());
         produitNew.setDescription(produit.getDescription());
         produitNew.setPrix(produit.getPrix());
-        produitNew.setEnPromotion(produit.isEnPromotion());
         produitNew.setCategorie(categorie);
 
         return produitRepo.save(produitNew);
@@ -64,49 +65,43 @@ public class RestController {
     }
 
     @PostMapping("/addCategorie")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Categorie addCategorie(@RequestBody Categorie categorie) {
         return getOrSaveCategorie(categorie);
     }
 
-    @PutMapping("putPromotiondates/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping("putPromotionListeDates/{id}")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Promotion>> updateProduits(@PathVariable int id, @RequestBody List<Promotion> promotions) {
         Optional<Produit> produitOptional = produitRepo.findById(id);
-
-        //rajouter si l'id du produit est le meme que le produit dans promotion
 
         if (produitOptional.isPresent()) {
             Produit produitEnPromo = produitOptional.get();
             log.info("le produit éxiste");
-            produitEnPromo.setEnPromotion(true);
-            produitRepo.save(produitEnPromo);
-            log.info("le booleen enPromotion du produit est passé à True");
-
 
             List<Promotion> listePromotions = new ArrayList<>();
             for (Promotion promotion1 : promotions) {
-                //test si la variable promotion est pas nulle
-                if (promotion1 == null) {
-                    log.warning("Le produit n'a pu être mis à jour ni la promotion créée");
-                    return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                //test si la variable promotion n'est pas nulle et que la date de promotion du produit n'existe pas déjà
+                if ((promotion1 == null) || (datePromotionDoesExist(promotion1.getDatePromotion(),produitEnPromo)))  {
+                    log.warning("La promotion n'a pu être créée");
+                    return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR); //changer la responseEntity
+                } else if (Objects.equals(produitEnPromo.getLibelle(), promotion1.getProduit().getLibelle())) {
+                    Promotion promotionTemp = new Promotion();
+                    promotionTemp.setDatePromotion(promotion1.getDatePromotion());
+                    promotionTemp.setTaux(promotion1.getTaux());
+                    promotionTemp.setProduit(produitEnPromo);
+
+                    log.info("la promotion est bien définie");
+                    promotionRepo.save(promotionTemp);
+
+                    //ajout à la liste des promotions pour le return de la ResponseEntity
+                    listePromotions.add(promotionTemp);
                 }
-                Promotion promotionTemp = new Promotion();
-                promotionTemp.setDatePromotion(promotion1.getDatePromotion());
-                promotionTemp.setTaux(promotion1.getTaux());
-                promotionTemp.setProduit(produitEnPromo);
-
-                log.info("la promotion est bien définie");
-                promotionRepo.save(promotionTemp);
-
-                //ajout à la liste des promotions pour le return de la ResponseEntity
-                listePromotions.add(promotionTemp);
-
             }
-            log.info("Le produit a été mis à jour en promotion et la promotion créée");
+            log.info("la liste de promotion a été créée");
             return new ResponseEntity(listePromotions, HttpStatus.OK);
         }
-        log.warning("Le produit est vide et n'a pas été mis en promotion");
+        log.warning("Le produit est vide aucune(s) promotion(s) de créée(s)");
         return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -115,13 +110,25 @@ public class RestController {
     @GetMapping("/")
     public ResponseEntity<List<Produit>> getAllProduit() {
         log.info("Affichage de tous les produits");
+        //récupération de tous les produits
         List<Produit> allProduits = produitRepo.findAll();
+        //récupération des produits en promotion today
+        List<Produit> produitsEnPromotion = getProduitEnPromotionTodayMethod();
+        //Set promotion à True pour les produits en promotions
+        for (Produit produit : allProduits) {
+            for (Produit produitPromo : produitsEnPromotion) {
+                if(produitPromo.equals(produit)){
+                    produit.setPromotion(true);
+                }
+            }
+        }
+        //renvoie de la liste de tous les produits (les produits en promotion sont notifiés)
         return ResponseEntity.ok(allProduits);
     }
 
     //RECUPERER TOUTES LES CATEGORIES
     @GetMapping("/categorie")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Categorie>> getAllCategorie() {
         log.info("Affichage de toutes les catégories");
         List<Categorie> allCategories = categorieRepo.findAll();
@@ -171,46 +178,7 @@ public class RestController {
 
 
 
-
-
-
-
-
-    /*
-    @PostMapping("/addPromotion")
-    public ResponseEntity<String> addPromotion(@RequestBody Promotion promotion) {
-        promotionRepo.save(promotion);
-        log.info(String.valueOf(promotion));
-        return ResponseEntity.ok("Data saved");
-    }
-    */
-
-    /*
-    // mise à jour produit en promotion
-    @PutMapping("putPromotion/{id}")
-    public ResponseEntity<Produit> updateProduit(@PathVariable int id, @RequestBody Produit produitDetails) {
-        Optional<Produit> produitOptional = produitRepo.findById(id);
-        if (produitOptional.isPresent()) {
-            Produit updateProduit = produitOptional.get();
-
-
-            //updateProduit.setLibelle(produitDetails.getLibelle());
-            //updateProduit.setPrix(produitDetails.getPrix());
-            //updateProduit.setCategorie(produitDetails.getCategorie());
-            updateProduit.setEnPromotion(true);
-            //updateProduit.setDescription(produitDetails.getDescription());
-
-            produitRepo.save(updateProduit);
-            log.info("Le produit a été mis à jour en promotion");
-            return ResponseEntity.ok(updateProduit);
-        }
-        log.warning("Le produit n'a pu être mis à jour");
-        return new ResponseEntity<>(produitDetails, HttpStatus.OK);
-    }
-
-     */
-
-    @PutMapping("putPromotion2/{id}")
+    @PutMapping("put1Promotion/{id}")
     public ResponseEntity<Promotion> updateProduit2(@PathVariable int id, @RequestBody Promotion promotion) {
         Optional<Produit> produitOptional = produitRepo.findById(id);
 
@@ -219,9 +187,6 @@ public class RestController {
         if (produitOptional.isPresent()) {
             Produit produitEnPromo = produitOptional.get();
             log.info("le produit éxiste");
-            produitEnPromo.setEnPromotion(true);
-            produitRepo.save(produitEnPromo);
-            log.info("le booleen enPromotion du produit est passé à True");
 
             //test si la variable promotion est pas nulle
             if (promotion == null) {
@@ -235,23 +200,55 @@ public class RestController {
 
             log.info("la promotion est bien définie");
             promotionRepo.save(promotionTemp);
-            log.info("Le produit a été mis à jour en promotion et la promotion créée");
+            log.info("La promotion créée");
             return ResponseEntity.ok(promotionTemp);
+        }else {
+            log.warning("Le produit est vide et n'a pas été mis en promotion");
         }
-        log.warning("Le produit est vide et n'a pas été mis en promotion");
         return new ResponseEntity<>(promotion, HttpStatus.OK);
     }
 
+    @GetMapping("/promotions")
+    public ResponseEntity<List<Promotion>> getAllPromotions() {
+        log.info("Affichage de toutes les promotions");
+        List<Promotion> promotions = promotionRepo.findAll();
+        return ResponseEntity.ok(promotions);
+    }
 
+    @GetMapping("/promotionsDateDuJour")
+    public ResponseEntity<List<Produit>> getAllProduitsEnPromotionToday() {
+        List<Produit> produits = getProduitEnPromotionTodayMethod();
+        return ResponseEntity.ok(produits);
+    }
 
+    public List<Produit> getProduitEnPromotionTodayMethod() {
+        log.info("Affichage de toutes les promotions");
+        List<Produit> produits = new ArrayList<>();
+        List<Promotion> promotions = promotionRepo.findAll();
+        LocalDate dateDuJour = LocalDate.now();
+        System.out.println(dateDuJour);
 
+        for(Promotion promotion : promotions){
+            System.out.println(promotion.getDatePromotion());
 
+            //if (promotion.getDatePromotion() == dateDuJour) {
+            if (dateDuJour.equals(promotion.getDatePromotion())) {
+                produits.add(promotion.getProduit());
+            }
+        }
+        return produits;
+    }
 
-
-
-
-
-
+    public boolean datePromotionDoesExist(LocalDate datePromotion, Produit produit) {
+        //recupération de tous les promotions du produits
+        List<Promotion> promotionsDuProduit = promotionRepo.findAllByProduit(produit);
+        //test si la date de promotion éxiste déjà pour ce produit
+        for (Promotion promotion : promotionsDuProduit){
+            if (datePromotion.equals(promotion.getDatePromotion())) {
+                return true;
+            }
+         }return false;
+    }
 
 
 

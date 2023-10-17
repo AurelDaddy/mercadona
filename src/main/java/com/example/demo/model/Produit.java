@@ -27,38 +27,19 @@ public class Produit {
     String libelle;
     String description;
     float prix;
-    boolean enPromotion = false;
+    boolean promotion = false;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="id_categorie")
     Categorie categorie;
 
-    //@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "produit")
-    //Promotion promotion;
-
-
-
-
-
-    /*Fonction à implementer
-     *       -> Ajouter produit en fonction du formulaire prérempli
-    *
-    *   Produit ajouterProduit(Produit p){
-    *        return p;
-    *         }
-    *
-    *   ? ajouterPromotion(Produit p){
-    *           this.promotion = true;
-    *           this.dateDebutPromotion = %s (recup formulaire);
-    *           this.dateFinPromotion = %s (recup formulaire);
-    *
-    *   return this;
-    *
-    *
-    *
-    *
-    *
-     **/
+    public void setPrix(float prix) {
+        if (prix <= 1) {
+            throw new RuntimeException("Le prix ne peut être inférieur à 1€");
+        } else {
+            this.prix = prix;
+        }
+    }
 
 
 
