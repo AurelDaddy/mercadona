@@ -8,7 +8,7 @@ import com.example.demo.model.User;
 import com.example.demo.repo.CategorieRepo;
 import com.example.demo.repo.ProduitRepo;
 import com.example.demo.repo.PromotionRepo;
-import com.example.demo.service.ProduitService;
+//import com.example.demo.service.ProduitService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.java.Log;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,8 +32,8 @@ import java.util.Optional;
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/mercadona")
 public class RestController {
-    @Autowired
-    private ProduitService service;
+    //@Autowired
+    //private ProduitService service;
 
     @Autowired
     ProduitRepo produitRepo;
@@ -134,12 +134,14 @@ public class RestController {
         List<Categorie> allCategories = categorieRepo.findAll();
         return ResponseEntity.ok(allCategories);
     }
-
+/*
     @PostMapping("/new")
     public String addNewUser(@RequestBody User userInfo){
         return service.addUser(userInfo);
     }
 
+
+ */
 
     //RECUPERER TOUS LES PRODUITS D UNE CATEGORIE
 

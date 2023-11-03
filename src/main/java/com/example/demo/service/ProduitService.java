@@ -1,4 +1,4 @@
-package com.example.demo.service;
+/*package com.example.demo.service;
 
 import com.example.demo.model.Produit;
 import com.example.demo.model.User;
@@ -34,10 +34,12 @@ public class ProduitService {
     }
      */
 
-
+/*
     public String addUser(User userInfo) {
         userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
         repository.save(userInfo);
         return "user added to system ";
     }
 }
+
+*/

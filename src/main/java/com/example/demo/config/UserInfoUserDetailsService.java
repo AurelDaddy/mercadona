@@ -1,4 +1,4 @@
-package com.example.demo.config;
+/*package com.example.demo.config;
 
 import com.example.demo.model.User;
 import com.example.demo.repo.UserRepo;
@@ -29,3 +29,5 @@ public class UserInfoUserDetailsService implements UserDetailsService {
     }
 
 }
+
+ */
