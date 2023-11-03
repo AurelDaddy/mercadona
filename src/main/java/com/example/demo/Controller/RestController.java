@@ -4,23 +4,18 @@ package com.example.demo.Controller;
 import com.example.demo.model.Categorie;
 import com.example.demo.model.Produit;
 import com.example.demo.model.Promotion;
-import com.example.demo.model.User;
-import com.example.demo.repo.CategorieRepo;
-import com.example.demo.repo.ProduitRepo;
-import com.example.demo.repo.PromotionRepo;
+import com.example.demo.repository.CategorieRepo;
+import com.example.demo.repository.ProduitRepo;
+import com.example.demo.repository.PromotionRepo;
 //import com.example.demo.service.ProduitService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

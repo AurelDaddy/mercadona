@@ -1,25 +1,20 @@
 package com.example.demo;
 
-import com.example.demo.model.Categorie;
 import com.example.demo.model.Produit;
 import com.example.demo.model.Promotion;
-import com.example.demo.repo.CategorieRepo;
-import com.example.demo.repo.ProduitRepo;
-import com.example.demo.repo.PromotionRepo;
-import org.apache.commons.lang3.RandomStringUtils;
+import com.example.demo.repository.CategorieRepo;
+import com.example.demo.repository.ProduitRepo;
+import com.example.demo.repository.PromotionRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.security.SecureRandom;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;

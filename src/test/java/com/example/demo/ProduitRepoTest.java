@@ -2,9 +2,8 @@ package com.example.demo;
 
 import com.example.demo.model.Categorie;
 import com.example.demo.model.Produit;
-import com.example.demo.model.Promotion;
-import com.example.demo.repo.CategorieRepo;
-import com.example.demo.repo.ProduitRepo;
+import com.example.demo.repository.CategorieRepo;
+import com.example.demo.repository.ProduitRepo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import static junit.framework.TestCase.assertEquals;
