@@ -1,10 +1,10 @@
 package com.example.demo;
 
-import com.example.demo.model.Produit;
-import com.example.demo.model.Promotion;
-import com.example.demo.repository.CategorieRepo;
-import com.example.demo.repository.ProduitRepo;
-import com.example.demo.repository.PromotionRepo;
+import com.example.demo.pojo.Produit;
+import com.example.demo.pojo.Promotion;
+import com.example.demo.repository.CategorieRepository;
+import com.example.demo.repository.ProduitRepository;
+import com.example.demo.repository.PromotionRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +28,13 @@ import static junit.framework.TestCase.assertNotNull;
 public class PromotionRepoTest {
 
     @Autowired
-    private ProduitRepo produitRepo;
+    private ProduitRepository produitRepo;
 
     @Autowired
-    private CategorieRepo categorieRepo;
+    private CategorieRepository categorieRepo;
 
     @Autowired
-    private PromotionRepo promotionRepo;
+    private PromotionRepository promotionRepo;
 
     Random random = new SecureRandom();
 
@@ -48,7 +48,8 @@ public class PromotionRepoTest {
         promotion.setTaux(40);
         promotion.setDatePromotion(LocalDate.now());
 
-        Optional<Produit> produitOptional = produitRepo.findById(1);
+
+        Optional<Produit> produitOptional = produitRepo.findById(1L);
         Produit produitEnPromotion = produitOptional.get();
         promotion.setProduit(produitEnPromotion);
         promotionRepo.save(promotion);
@@ -59,7 +60,7 @@ public class PromotionRepoTest {
         promotion1.setTaux(40);
         promotion1.setDatePromotion(LocalDate.now());
 
-        Optional<Produit> produitOptional1 = produitRepo.findById(2);
+        Optional<Produit> produitOptional1 = produitRepo.findById(2L);
         Produit produitEnPromotion1 = produitOptional1.get();
         promotion1.setProduit(produitEnPromotion1);
         promotionRepo.save(promotion1);
@@ -73,7 +74,7 @@ public class PromotionRepoTest {
         int taux = 95;
         Promotion promotion = new Promotion();
         promotion.setTaux(taux);
-        Optional<Produit> produitOptional = produitRepo.findById(1);
+        Optional<Produit> produitOptional = produitRepo.findById(1L);
         Produit produit = produitOptional.get();
         promotion.setProduit(produit);
         promotionRepo.save(promotion);
@@ -86,7 +87,7 @@ public class PromotionRepoTest {
         int taux = 3;
         Promotion promotion = new Promotion();
         promotion.setTaux(taux);
-        Optional<Produit> produitOptional = produitRepo.findById(1);
+        Optional<Produit> produitOptional = produitRepo.findById(1L);
         Produit produit = produitOptional.get();
         promotion.setProduit(produit);
         promotionRepo.save(promotion);
@@ -99,7 +100,7 @@ public class PromotionRepoTest {
         int taux = 20;
         Promotion promotion = new Promotion();
         promotion.setTaux(taux);
-        Optional<Produit> produitOptional = produitRepo.findById(1);
+        Optional<Produit> produitOptional = produitRepo.findById(1L);
         Produit produit = produitOptional.get();
         promotion.setProduit(produit);
         promotionRepo.save(promotion);
@@ -111,7 +112,7 @@ public class PromotionRepoTest {
     public void getListPromotionOfProduit() {
         List<Promotion> promotions = new ArrayList<>();
 
-        Optional<Produit> produitOptional = produitRepo.findById(1);
+        Optional<Produit> produitOptional = produitRepo.findById(1L);
         Produit produit = produitOptional.get();
         //création premiere promotion
         Promotion promotion = new Promotion();

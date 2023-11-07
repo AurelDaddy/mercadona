@@ -1,5 +1,32 @@
-/*package com.example.demo.service;
+package com.example.demo.service;
 
+import com.example.demo.documentState.ProduitState;
+import com.example.demo.pojo.Produit;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface ProduitService {
+
+    List<Produit> getAllProduitsByState(ProduitState produitState);
+
+    List<Produit> getAllProduits();
+
+    void addProduit(Produit produit);
+
+    void deleteProduit(Long id);
+
+    void updateProduit(Long id, Produit produit);
+
+    Produit getProduitById(Long id);
+
+    List<Produit> getAllProduitsByCategorie(Long id);
+}
+
+
+
+/*
 import com.example.demo.model.Produit;
 import com.example.demo.model.User;
 import com.example.demo.repo.UserRepo;
@@ -8,7 +35,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 @Service
 public class ProduitService {
@@ -20,6 +46,8 @@ public class ProduitService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+ */
 
     /*
     @PostConstruct

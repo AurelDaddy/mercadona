@@ -1,7 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.pojo;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

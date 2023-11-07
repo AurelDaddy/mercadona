@@ -1,9 +1,9 @@
 package com.example.demo;
 
-import com.example.demo.model.Categorie;
-import com.example.demo.model.Produit;
-import com.example.demo.repository.CategorieRepo;
-import com.example.demo.repository.ProduitRepo;
+import com.example.demo.pojo.Categorie;
+import com.example.demo.pojo.Produit;
+import com.example.demo.repository.CategorieRepository;
+import com.example.demo.repository.ProduitRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,10 +28,10 @@ import static junit.framework.TestCase.assertNotNull;
 public class ProduitRepoTest {
 
     @Autowired
-    private ProduitRepo produitRepo;
+    private ProduitRepository produitRepo;
 
     @Autowired
-    private CategorieRepo categorieRepo;
+    private CategorieRepository categorieRepo;
 
 
     Random random = new SecureRandom();
