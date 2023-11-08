@@ -5,6 +5,7 @@ import com.example.demo.pojo.Promotion;
 import com.example.demo.repository.CategorieRepository;
 import com.example.demo.repository.ProduitRepository;
 import com.example.demo.repository.PromotionRepository;
+import com.example.demo.service.PromotionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ import static junit.framework.TestCase.assertNotNull;
 @SpringBootTest(classes = Demo2Application.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class PromotionRepoTest {
+
+    @Autowired
+    private PromotionService promotionService;
 
     @Autowired
     private ProduitRepository produitRepo;
@@ -112,7 +116,7 @@ public class PromotionRepoTest {
     public void getListPromotionOfProduit() {
         List<Promotion> promotions = new ArrayList<>();
 
-        Optional<Produit> produitOptional = produitRepo.findById(1L);
+        Optional<Produit> produitOptional = produitRepo.findById(2L);
         Produit produit = produitOptional.get();
         //création premiere promotion
         Promotion promotion = new Promotion();
@@ -130,6 +134,43 @@ public class PromotionRepoTest {
     }
 
 
+    @Test
+    public void getListPromotionToday(){
+        Long id = 3L;
+        Optional<Produit> produitOptional = produitRepo.findById(id);
+        Produit produit = produitOptional.get();
+        //Création premiere promotion date du jour
+        Promotion promotion = new Promotion();
+        promotion.setTaux(20);
+        promotion.setProduit(produit);
+        promotion.setDatePromotion(LocalDate.now());
+        promotionRepo.save(promotion);
+        assertEquals(1, promotionService.getProduitEnPromotionTodayMethod().size());
+
+    }
+
+    @Test
+    public void addPromotionDateExistAlready() {
+        Long id = 3L;
+        Optional<Produit> produitOptional = produitRepo.findById(id);
+        Produit produit = produitOptional.get();
+        //Création premiere promotion date du jour
+        Promotion promotion = new Promotion();
+        promotion.setTaux(20);
+        promotion.setProduit(produit);
+        promotion.setDatePromotion(LocalDate.now());
+        promotionRepo.save(promotion);
+        //Création deuxième promotion date du jour
+        Promotion promotion1 = new Promotion();
+        promotion1.setTaux(20);
+        promotion1.setProduit(produit);
+        promotion1.setDatePromotion(LocalDate.now());
+        promotionService.addPromotion(promotion1, id);
+
+        assertEquals(1, promotionService.getProduitEnPromotionTodayMethod().size());
+
+
+    }
 }
 
 
