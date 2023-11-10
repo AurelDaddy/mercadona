@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.pojo.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.pojo.UsernotUse;
+import com.example.demo.repository.UserNotUseRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserNotUseRepository userRepository;
 
     @Override
-    public List<User> getAllUser() {
+    public List<UsernotUse> getAllUser() {
         return userRepository.findAllUser();
     }
 
     @Override
-    public User getUserById(Long id) {
+    public UsernotUse getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -30,13 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(UsernotUse user) {
         userRepository.save(user);
     }
 
     @Override
-    public void updateUserById(User user, Long id) {
-        User oldUser = getUserById(id);
+    public void updateUserById(UsernotUse user, Long id) {
+        UsernotUse oldUser = getUserById(id);
 
         if (oldUser != null) {
             oldUser.setName(user.getName());

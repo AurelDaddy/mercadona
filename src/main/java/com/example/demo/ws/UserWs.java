@@ -1,6 +1,6 @@
 package com.example.demo.ws;
 
-import com.example.demo.pojo.User;
+import com.example.demo.pojo.UsernotUse;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +16,22 @@ public class UserWs {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUser() {
+    public List<UsernotUse> getAllUser() {
         return userService.getAllUser();
     }
 
     @GetMapping("{id}")
-    public User getUserById(@PathVariable("id") Long id){
+    public UsernotUse getUserById(@PathVariable("id") Long id){
         return userService.getUserById(id);
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user) {
+    public void createUser(@RequestBody UsernotUse user) {
         userService.createUser(user);
     }
 
     @PutMapping("{id}")
-    public void updateUserById(@PathVariable Long id, @RequestBody User user) {
+    public void updateUserById(@PathVariable Long id, @RequestBody UsernotUse user) {
         userService.updateUserById(user,id);
 
     }

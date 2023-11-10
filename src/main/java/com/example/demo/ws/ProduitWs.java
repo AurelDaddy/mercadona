@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(ApiRegistration.API_REST + ApiRegistration.PRODUIT) // -> localhost:8080/api/produit/
+@RequestMapping(ApiRegistration.API_REST + ApiRegistration.TEST + ApiRegistration.ALL + ApiRegistration.PRODUIT) // -> localhost:8080/api/produit/
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProduitWs {
 

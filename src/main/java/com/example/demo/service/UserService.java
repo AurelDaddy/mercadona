@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.pojo.User;
+import com.example.demo.pojo.UsernotUse;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUser();
+    List<UsernotUse> getAllUser();
 
-    User getUserById(Long id);
+    UsernotUse getUserById(Long id);
 
     void deleteUserById(Long id);
 
-    void createUser(User user);
+    void createUser(UsernotUse user);
 
-    void updateUserById(User user, Long id);
+    void updateUserById(UsernotUse user, Long id);
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(ApiRegistration.API_REST + ApiRegistration.PROMOTION)
+@RequestMapping(ApiRegistration.API_REST + ApiRegistration.TEST + ApiRegistration.ALL + ApiRegistration.PROMOTION)
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PromotionWs {

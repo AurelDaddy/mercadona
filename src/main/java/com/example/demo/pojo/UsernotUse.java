@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name="userinfo")
 
-public class User {
+public class UsernotUse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
