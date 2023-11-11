@@ -4,13 +4,14 @@ import com.example.demo.documentState.ProduitState;
 import com.example.demo.pojo.Produit;
 import com.example.demo.service.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(ApiRegistration.API_REST + ApiRegistration.TEST + ApiRegistration.ALL + ApiRegistration.PRODUIT) // -> localhost:8080/api/produit/
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping(ApiRegistration.API_REST + ApiRegistration.TEST + ApiRegistration.PRODUIT) // -> localhost:8080/api/produit/
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", maxAge = 3600, allowCredentials = "true")
 public class ProduitWs {
 
     @Autowired
@@ -37,16 +38,19 @@ public class ProduitWs {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public void addProduit(@RequestBody Produit produit){
         produitService.addProduit(produit);
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteProduitById(@PathVariable Long id){
         produitService.deleteProduit(id);
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void updateProduitById(@RequestBody Produit produit, @PathVariable Long id){
         produitService.updateProduit(id, produit);
     }
