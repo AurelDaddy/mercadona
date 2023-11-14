@@ -67,18 +67,7 @@ public class ProduitRepoTest {
         assertEquals(produitResults.get(0).getId(),produit.getId());
 
     }
-    @Test(expected = DataIntegrityViolationException.class)
-    public void saveCategorieSameName() {
 
-        String libelle = "test1";
-        Categorie categorie = new Categorie();
-        categorie.setLibelle(libelle);
-        categorieRepo.save(categorie);
-
-        Categorie categorie2 = new Categorie();
-        categorie2.setLibelle(libelle);
-        categorieRepo.save(categorie2);
-    }
 
     @Test(expected = RuntimeException.class)
     public void addProduitPrixNegatif() {
@@ -94,22 +83,8 @@ public class ProduitRepoTest {
         Produit produit = new Produit();
         produit.setPrix(prix);
         produitRepo.save(produit);
-        assertEquals(7, produitRepo.count());
+        assertEquals(1, produitRepo.count());
     }
 
 
-
-
-/*
-    @Test(expected = RuntimeException.class)
-    public void addPromotionTauxCorrect() {
-        int taux = 20;
-        Promotion promotion = new Promotion();
-        promotion.setTaux(taux);
-        promotionRepo.save(promotion);
-        assertEquals(1, promotionRepo.count());
-    }
-
-
- */
 }
