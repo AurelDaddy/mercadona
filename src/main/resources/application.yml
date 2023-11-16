@@ -1,0 +1,36 @@
+#base de données pg4admin
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRESQL_HOSTNAME}:${POSTGRESQL_PORT}/${POSTGRESQL_DB_NAME}
+    username: ${POSTGRESQL_DB_USER}
+    password: ${POSTGRESQL_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+
+    show-sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  main:
+    allow-circular-references: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+  # App Properties
+app:
+  jwtCookieName: mercatoken
+  jwtSecret: ======================mercadonasecret==========================
+  jwtExpirationMs: 86400000
