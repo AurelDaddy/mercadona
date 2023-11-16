@@ -13,6 +13,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -52,7 +54,7 @@ public class CategorieRepoTest {
         categorieRepo.save(categorie2);
     }
 
-    /*@Test
+    @Test
     public void updateCategorie(){
         String libelle1 = "test1";
         Categorie categorie = new Categorie();
@@ -61,15 +63,15 @@ public class CategorieRepoTest {
 
         String libelle2 = "test2";
         Categorie newcategorie = new Categorie();
-
-        int id = categorieRepo.findByLibelle(libelle1).getId();
+        newcategorie.setLibelle(libelle2);
 
         categorieService.updateCategorie(newcategorie,1L);
-        assertEquals(1,categorieRepo.findByLibelle("test2"));
+        Optional<Categorie> optionalCategorie = categorieRepo.findById(1L);
+        Categorie categorieUpdated = optionalCategorie.get();
+        assertEquals("test2",categorieUpdated.getLibelle());
 
     }
 
-     */
 
 
 }

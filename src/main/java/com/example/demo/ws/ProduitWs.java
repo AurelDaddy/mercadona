@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(ApiRegistration.API_REST + ApiRegistration.TEST + ApiRegistration.PRODUIT) // -> localhost:8080/api/produit/
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 public class ProduitWs {
 
     @Autowired

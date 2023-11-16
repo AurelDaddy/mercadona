@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequestMapping(ApiRegistration.API_REST + ApiRegistration.CATEGORIE)
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600, allowCredentials = "true")
 public class CategorieWs {
 
     @Autowired
