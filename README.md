@@ -21,6 +21,14 @@ la base de donnée utilisée est postgresql comme spécifié dans application.ym
 Comme il y a des variables d'environnement, il est important de configurer spring.datasource.url,
 spring.datasource.username et spring.datasource.password avec votre propre base de donnée.
 
+Afin de deployer en local, vous devez juste installer les dependances.
+Pour cela, allez à la racine du projet et lancez la commande
+- ```mvn install```
+puis, lancez le projet via 
+- ```mvn spring-boot:run```
+
+Une base de donnée va se charger automatiquement grâce à data.sql
+
 Vous pouvez ajouter un utilisateur admin comme ceci ou bien utiliser celui-ci dans signin {
 username: "James"
 password: "123merca"
@@ -32,17 +40,9 @@ Vous pourrez ensuite vous authentifier et effectuer des tests sur Postman en che
 ![image](https://github.com/AurelDaddy/mercadona/assets/140730521/ea7640fd-daa2-4849-9a8a-f0cdbaf57210)
 
 
-Afin de deployer en local, vous devez juste installer les dependances.
-Pour cela, allez à la racine du projet et lancez la commande
-- ```mvn install```
-puis, lancez le projet via 
-- ```mvn spring-boot:run```
-
-Une base de donnée va se charger automatiquement grâce à data.sql
-
 ## Technologies utilisées
 
-Ce projet Spring Boot 3
+Spring Boot 3
 
 ## Autres infos
 
